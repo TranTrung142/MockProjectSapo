@@ -1,0 +1,2635 @@
+2020-09-08 17:27:08.419 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        CAST(p.id as varchar) productId,
+        code productCode,
+        p.name productName,
+        c.name categoryName,
+        price,
+        uom,
+        image_link linkImg,
+        inventory_number warehouseQuantity,
+        p.is_deleted ,
+        p.description 
+    from
+        product p 
+    left join
+        category c 
+            on p.category_id = c.id 
+    where
+        p.is_deleted = false     
+        and(
+            upper(p.name) like concat('%',upper(?),'%')     
+            or upper(p.code ) like concat('%',upper(?),'%')    
+            or upper(c.name ) like concat('%',upper(?),'%')
+        )     
+    order by
+        p.last_updated_stamp DESC limit ?
+2020-09-08 17:27:08.635 DEBUG 17592 --- [nio-8080-exec-2]  org.hibernate.SQL                        : 
+    select
+        cast(id as varchar) supplierId,
+        code supplierCode,
+        name supplierName,
+        phone_number phoneNumber,
+        email,
+        address  
+    from
+        supplier s 
+    where
+        is_deleted = false   
+        and (
+            upper(code) like upper(concat('%', ?, '%'))   
+            or upper(name) like upper(concat('%', ?, '%'))   
+            or upper(email) like upper(concat('%', ?, '%'))   
+            or upper(phone_number) like upper(concat('%', ?, '%'))   
+            or upper(address) like upper(concat('%', ?, '%'))
+        ) 
+    order by
+        s.last_updated_stamp desc limit ?
+2020-09-08 17:27:09.837 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2020-09-08 17:27:09.837 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - []
+2020-09-08 17:27:09.842 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - []
+2020-09-08 17:27:09.842 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2020-09-08 17:27:09.842 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - []
+2020-09-08 17:27:09.842 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - []
+2020-09-08 17:27:09.842 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - []
+2020-09-08 17:27:09.842 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - []
+2020-09-08 17:27:46.441 DEBUG 17592 --- [nio-8080-exec-8]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:27:46.442 TRACE 17592 --- [nio-8080-exec-8]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:27:46.443 DEBUG 17592 --- [nio-8080-exec-8]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:27:46.444 TRACE 17592 --- [nio-8080-exec-8]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:27:46.448 DEBUG 17592 --- [nio-8080-exec-8]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:27:46.449 TRACE 17592 --- [nio-8080-exec-8]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:27:46.453 DEBUG 17592 --- [nio-8080-exec-8]  org.hibernate.SQL                        : 
+    select
+        person0_.party_id as party_id1_8_,
+        person0_.birth_date as birth_da2_8_,
+        person0_.first_name as first_na3_8_,
+        person0_.gender as gender4_8_,
+        person0_.last_name as last_nam5_8_,
+        person0_.middle_name as middle_n6_8_ 
+    from
+        person person0_ 
+    where
+        person0_.party_id=?
+2020-09-08 17:27:46.454 TRACE 17592 --- [nio-8080-exec-8]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:27:46.466 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:27:46.466 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:27:46.468 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:27:46.468 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:27:46.472 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:27:46.472 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:27:46.475 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        permission0_.group_id as group_id1_12_0_,
+        permission0_.permission_id as permissi2_12_0_,
+        securitype1_.permission_id as permissi1_13_1_,
+        securitype1_.created_stamp as created_2_13_1_,
+        securitype1_.description as descript3_13_1_,
+        securitype1_.last_updated_stamp as last_upd4_13_1_ 
+    from
+        security_group_permission permission0_ 
+    inner join
+        security_permission securitype1_ 
+            on permission0_.permission_id=securitype1_.permission_id 
+    where
+        permission0_.group_id=?
+2020-09-08 17:27:46.476 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ROLE_ADMIN]
+2020-09-08 17:27:46.478  INFO 17592 --- [io-8080-exec-10]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW, type = MENU
+2020-09-08 17:27:46.479 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_,
+        applicatio0_.created_stamp as created_2_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_,
+        applicatio0_.module_id as module_i4_0_,
+        applicatio0_.permission_id as permissi5_0_,
+        applicatio0_.application_type_id as applicat6_0_ 
+    from
+        application applicatio0_ 
+    where
+        applicatio0_.application_type_id=? 
+        and (
+            applicatio0_.permission_id in (
+                ? , ? , ? , ? , ? , ? , ? , ?
+            )
+        )
+2020-09-08 17:27:46.479 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:27:46.479 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [USER_CREATE]
+2020-09-08 17:27:46.480 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [USER_VIEW]
+2020-09-08 17:27:46.480 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [ORDER_CREATE]
+2020-09-08 17:27:46.480 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [ORDER_VIEW]
+2020-09-08 17:27:46.480 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [PRODUCT_CREATE]
+2020-09-08 17:27:46.480 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [PRODUCT_VIEW]
+2020-09-08 17:27:46.480 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [8] as [VARCHAR] - [SUPPLIER_CREATE]
+2020-09-08 17:27:46.480 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [9] as [VARCHAR] - [SUPPLIER_VIEW]
+2020-09-08 17:27:46.481 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:27:46.482 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_USER]
+2020-09-08 17:27:46.485 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_type_id as applicat1_1_0_,
+        applicatio0_.created_stamp as created_2_1_0_,
+        applicatio0_.description as descript3_1_0_,
+        applicatio0_.last_updated_stamp as last_upd4_1_0_ 
+    from
+        application_type applicatio0_ 
+    where
+        applicatio0_.application_type_id=?
+2020-09-08 17:27:46.485 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:27:46.487 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:27:46.487 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_ORDER]
+2020-09-08 17:27:46.491 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:27:46.491 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_PRODUCT]
+2020-09-08 17:27:46.493 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:27:46.493 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_SUPPLIER]
+2020-09-08 17:27:46.495  INFO 17592 --- [io-8080-exec-10]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8
+2020-09-08 17:27:46.495  INFO 17592 --- [io-8080-exec-10]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList1.sz = 8
+2020-09-08 17:27:46.495  INFO 17592 --- [io-8080-exec-10]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList2.sz = 0
+2020-09-08 17:27:46.578 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:27:46.579 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:27:46.581 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:27:46.581 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:27:46.585 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:27:46.586 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:27:46.590 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        permission0_.group_id as group_id1_12_0_,
+        permission0_.permission_id as permissi2_12_0_,
+        securitype1_.permission_id as permissi1_13_1_,
+        securitype1_.created_stamp as created_2_13_1_,
+        securitype1_.description as descript3_13_1_,
+        securitype1_.last_updated_stamp as last_upd4_13_1_ 
+    from
+        security_group_permission permission0_ 
+    inner join
+        security_permission securitype1_ 
+            on permission0_.permission_id=securitype1_.permission_id 
+    where
+        permission0_.group_id=?
+2020-09-08 17:27:46.590 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ROLE_ADMIN]
+2020-09-08 17:27:46.591  INFO 17592 --- [nio-8080-exec-4]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW, type = MENU
+2020-09-08 17:27:46.593 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_,
+        applicatio0_.created_stamp as created_2_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_,
+        applicatio0_.module_id as module_i4_0_,
+        applicatio0_.permission_id as permissi5_0_,
+        applicatio0_.application_type_id as applicat6_0_ 
+    from
+        application applicatio0_ 
+    where
+        applicatio0_.application_type_id=? 
+        and (
+            applicatio0_.permission_id in (
+                ? , ? , ? , ? , ? , ? , ? , ?
+            )
+        )
+2020-09-08 17:27:46.593 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:27:46.593 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [USER_CREATE]
+2020-09-08 17:27:46.593 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [USER_VIEW]
+2020-09-08 17:27:46.593 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [ORDER_CREATE]
+2020-09-08 17:27:46.594 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [ORDER_VIEW]
+2020-09-08 17:27:46.594 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [PRODUCT_CREATE]
+2020-09-08 17:27:46.594 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [PRODUCT_VIEW]
+2020-09-08 17:27:46.594 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [8] as [VARCHAR] - [SUPPLIER_CREATE]
+2020-09-08 17:27:46.594 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [9] as [VARCHAR] - [SUPPLIER_VIEW]
+2020-09-08 17:27:46.596 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:27:46.596 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_USER]
+2020-09-08 17:27:46.597 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_type_id as applicat1_1_0_,
+        applicatio0_.created_stamp as created_2_1_0_,
+        applicatio0_.description as descript3_1_0_,
+        applicatio0_.last_updated_stamp as last_upd4_1_0_ 
+    from
+        application_type applicatio0_ 
+    where
+        applicatio0_.application_type_id=?
+2020-09-08 17:27:46.598 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:27:46.600 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:27:46.601 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_ORDER]
+2020-09-08 17:27:46.603 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:27:46.604 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_PRODUCT]
+2020-09-08 17:27:46.605 DEBUG 17592 --- [nio-8080-exec-4]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:27:46.605 TRACE 17592 --- [nio-8080-exec-4]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_SUPPLIER]
+2020-09-08 17:27:46.606  INFO 17592 --- [nio-8080-exec-4]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8
+2020-09-08 17:27:46.606  INFO 17592 --- [nio-8080-exec-4]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList1.sz = 8
+2020-09-08 17:27:46.606  INFO 17592 --- [nio-8080-exec-4]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList2.sz = 0
+2020-09-08 17:27:49.560 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        CAST(p.id as varchar) productId,
+        code productCode,
+        p.name productName,
+        c.name categoryName,
+        price,
+        uom,
+        image_link linkImg,
+        inventory_number warehouseQuantity,
+        p.is_deleted ,
+        p.description 
+    from
+        product p 
+    left join
+        category c 
+            on p.category_id = c.id 
+    where
+        p.is_deleted = false     
+        and(
+            upper(p.name) like concat('%',upper(?),'%')     
+            or upper(p.code ) like concat('%',upper(?),'%')    
+            or upper(c.name ) like concat('%',upper(?),'%')
+        )     
+    order by
+        p.last_updated_stamp DESC limit ?
+2020-09-08 17:27:49.560 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2020-09-08 17:27:49.560 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - []
+2020-09-08 17:27:49.560 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - []
+2020-09-08 17:27:49.561 DEBUG 17592 --- [nio-8080-exec-2]  org.hibernate.SQL                        : 
+    select
+        cast(id as varchar) supplierId,
+        code supplierCode,
+        name supplierName,
+        phone_number phoneNumber,
+        email,
+        address  
+    from
+        supplier s 
+    where
+        is_deleted = false   
+        and (
+            upper(code) like upper(concat('%', ?, '%'))   
+            or upper(name) like upper(concat('%', ?, '%'))   
+            or upper(email) like upper(concat('%', ?, '%'))   
+            or upper(phone_number) like upper(concat('%', ?, '%'))   
+            or upper(address) like upper(concat('%', ?, '%'))
+        ) 
+    order by
+        s.last_updated_stamp desc limit ?
+2020-09-08 17:27:49.561 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2020-09-08 17:27:49.561 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - []
+2020-09-08 17:27:49.562 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - []
+2020-09-08 17:27:49.562 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - []
+2020-09-08 17:27:49.562 TRACE 17592 --- [nio-8080-exec-2]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - []
+2020-09-08 17:28:35.914 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:28:35.914 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:28:35.917 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:28:35.918 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:28:35.920 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:28:35.921 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:28:35.924 DEBUG 17592 --- [io-8080-exec-10]  org.hibernate.SQL                        : 
+    select
+        person0_.party_id as party_id1_8_,
+        person0_.birth_date as birth_da2_8_,
+        person0_.first_name as first_na3_8_,
+        person0_.gender as gender4_8_,
+        person0_.last_name as last_nam5_8_,
+        person0_.middle_name as middle_n6_8_ 
+    from
+        person person0_ 
+    where
+        person0_.party_id=?
+2020-09-08 17:28:35.924 TRACE 17592 --- [io-8080-exec-10]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:28:35.970 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:28:35.970 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:28:35.972 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:28:35.973 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:28:35.976 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:28:35.977 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:28:35.981 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        permission0_.group_id as group_id1_12_0_,
+        permission0_.permission_id as permissi2_12_0_,
+        securitype1_.permission_id as permissi1_13_1_,
+        securitype1_.created_stamp as created_2_13_1_,
+        securitype1_.description as descript3_13_1_,
+        securitype1_.last_updated_stamp as last_upd4_13_1_ 
+    from
+        security_group_permission permission0_ 
+    inner join
+        security_permission securitype1_ 
+            on permission0_.permission_id=securitype1_.permission_id 
+    where
+        permission0_.group_id=?
+2020-09-08 17:28:35.981 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ROLE_ADMIN]
+2020-09-08 17:28:35.984  INFO 17592 --- [nio-8080-exec-5]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW, type = MENU
+2020-09-08 17:28:35.986 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_,
+        applicatio0_.created_stamp as created_2_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_,
+        applicatio0_.module_id as module_i4_0_,
+        applicatio0_.permission_id as permissi5_0_,
+        applicatio0_.application_type_id as applicat6_0_ 
+    from
+        application applicatio0_ 
+    where
+        applicatio0_.application_type_id=? 
+        and (
+            applicatio0_.permission_id in (
+                ? , ? , ? , ? , ? , ? , ? , ?
+            )
+        )
+2020-09-08 17:28:35.986 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:28:35.987 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [USER_CREATE]
+2020-09-08 17:28:35.987 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [USER_VIEW]
+2020-09-08 17:28:35.987 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [ORDER_CREATE]
+2020-09-08 17:28:35.987 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [ORDER_VIEW]
+2020-09-08 17:28:35.987 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [PRODUCT_CREATE]
+2020-09-08 17:28:35.987 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [PRODUCT_VIEW]
+2020-09-08 17:28:35.987 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [8] as [VARCHAR] - [SUPPLIER_CREATE]
+2020-09-08 17:28:35.987 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [9] as [VARCHAR] - [SUPPLIER_VIEW]
+2020-09-08 17:28:35.988 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:28:35.989 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_USER]
+2020-09-08 17:28:35.990 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_type_id as applicat1_1_0_,
+        applicatio0_.created_stamp as created_2_1_0_,
+        applicatio0_.description as descript3_1_0_,
+        applicatio0_.last_updated_stamp as last_upd4_1_0_ 
+    from
+        application_type applicatio0_ 
+    where
+        applicatio0_.application_type_id=?
+2020-09-08 17:28:35.990 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:28:35.992 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:28:35.993 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_ORDER]
+2020-09-08 17:28:35.994 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:28:35.994 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_PRODUCT]
+2020-09-08 17:28:35.996 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:28:35.996 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_SUPPLIER]
+2020-09-08 17:28:35.997  INFO 17592 --- [nio-8080-exec-5]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8
+2020-09-08 17:28:35.998  INFO 17592 --- [nio-8080-exec-5]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList1.sz = 8
+2020-09-08 17:28:35.998  INFO 17592 --- [nio-8080-exec-5]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList2.sz = 0
+2020-09-08 17:28:36.324 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:28:36.324 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:28:36.325 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:28:36.326 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:28:36.328 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:28:36.329 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:28:36.332 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        permission0_.group_id as group_id1_12_0_,
+        permission0_.permission_id as permissi2_12_0_,
+        securitype1_.permission_id as permissi1_13_1_,
+        securitype1_.created_stamp as created_2_13_1_,
+        securitype1_.description as descript3_13_1_,
+        securitype1_.last_updated_stamp as last_upd4_13_1_ 
+    from
+        security_group_permission permission0_ 
+    inner join
+        security_permission securitype1_ 
+            on permission0_.permission_id=securitype1_.permission_id 
+    where
+        permission0_.group_id=?
+2020-09-08 17:28:36.333 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ROLE_ADMIN]
+2020-09-08 17:28:36.335  INFO 17592 --- [nio-8080-exec-3]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW, type = MENU
+2020-09-08 17:28:36.336 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_,
+        applicatio0_.created_stamp as created_2_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_,
+        applicatio0_.module_id as module_i4_0_,
+        applicatio0_.permission_id as permissi5_0_,
+        applicatio0_.application_type_id as applicat6_0_ 
+    from
+        application applicatio0_ 
+    where
+        applicatio0_.application_type_id=? 
+        and (
+            applicatio0_.permission_id in (
+                ? , ? , ? , ? , ? , ? , ? , ?
+            )
+        )
+2020-09-08 17:28:36.337 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:28:36.337 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [USER_CREATE]
+2020-09-08 17:28:36.337 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [USER_VIEW]
+2020-09-08 17:28:36.337 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [ORDER_CREATE]
+2020-09-08 17:28:36.337 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [ORDER_VIEW]
+2020-09-08 17:28:36.337 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [PRODUCT_CREATE]
+2020-09-08 17:28:36.337 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [PRODUCT_VIEW]
+2020-09-08 17:28:36.338 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [8] as [VARCHAR] - [SUPPLIER_CREATE]
+2020-09-08 17:28:36.338 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [9] as [VARCHAR] - [SUPPLIER_VIEW]
+2020-09-08 17:28:36.339 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:28:36.339 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_USER]
+2020-09-08 17:28:36.340 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_type_id as applicat1_1_0_,
+        applicatio0_.created_stamp as created_2_1_0_,
+        applicatio0_.description as descript3_1_0_,
+        applicatio0_.last_updated_stamp as last_upd4_1_0_ 
+    from
+        application_type applicatio0_ 
+    where
+        applicatio0_.application_type_id=?
+2020-09-08 17:28:36.340 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:28:36.342 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:28:36.342 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_ORDER]
+2020-09-08 17:28:36.343 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:28:36.344 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_PRODUCT]
+2020-09-08 17:28:36.345 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:28:36.346 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_SUPPLIER]
+2020-09-08 17:28:36.346  INFO 17592 --- [nio-8080-exec-3]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8
+2020-09-08 17:28:36.347  INFO 17592 --- [nio-8080-exec-3]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList1.sz = 8
+2020-09-08 17:28:36.347  INFO 17592 --- [nio-8080-exec-3]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList2.sz = 0
+2020-09-08 17:28:41.635 DEBUG 17592 --- [nio-8080-exec-1]  org.hibernate.SQL                        : 
+    select
+        CAST(p.id as varchar) productId,
+        code productCode,
+        p.name productName,
+        c.name categoryName,
+        price,
+        uom,
+        image_link linkImg,
+        inventory_number warehouseQuantity,
+        p.is_deleted ,
+        p.description 
+    from
+        product p 
+    left join
+        category c 
+            on p.category_id = c.id 
+    where
+        p.is_deleted = false     
+        and(
+            upper(p.name) like concat('%',upper(?),'%')     
+            or upper(p.code ) like concat('%',upper(?),'%')    
+            or upper(c.name ) like concat('%',upper(?),'%')
+        )     
+    order by
+        p.last_updated_stamp DESC limit ?
+2020-09-08 17:28:41.635 DEBUG 17592 --- [nio-8080-exec-7]  org.hibernate.SQL                        : 
+    select
+        cast(id as varchar) supplierId,
+        code supplierCode,
+        name supplierName,
+        phone_number phoneNumber,
+        email,
+        address  
+    from
+        supplier s 
+    where
+        is_deleted = false   
+        and (
+            upper(code) like upper(concat('%', ?, '%'))   
+            or upper(name) like upper(concat('%', ?, '%'))   
+            or upper(email) like upper(concat('%', ?, '%'))   
+            or upper(phone_number) like upper(concat('%', ?, '%'))   
+            or upper(address) like upper(concat('%', ?, '%'))
+        ) 
+    order by
+        s.last_updated_stamp desc limit ?
+2020-09-08 17:28:41.635 TRACE 17592 --- [nio-8080-exec-1]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2020-09-08 17:28:41.635 TRACE 17592 --- [nio-8080-exec-1]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - []
+2020-09-08 17:28:41.635 TRACE 17592 --- [nio-8080-exec-1]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - []
+2020-09-08 17:28:41.636 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2020-09-08 17:28:41.636 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - []
+2020-09-08 17:28:41.636 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - []
+2020-09-08 17:28:41.636 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - []
+2020-09-08 17:28:41.636 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - []
+2020-09-08 17:29:19.579 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:29:19.580 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:29:19.581 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:29:19.581 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:29:19.581 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:29:19.582 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:29:19.583 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:29:19.583 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:29:19.584 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:29:19.584 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:29:19.587 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:29:19.587 DEBUG 17592 --- [nio-8080-exec-5]  org.hibernate.SQL                        : 
+    select
+        person0_.party_id as party_id1_8_,
+        person0_.birth_date as birth_da2_8_,
+        person0_.first_name as first_na3_8_,
+        person0_.gender as gender4_8_,
+        person0_.last_name as last_nam5_8_,
+        person0_.middle_name as middle_n6_8_ 
+    from
+        person person0_ 
+    where
+        person0_.party_id=?
+2020-09-08 17:29:19.587 TRACE 17592 --- [nio-8080-exec-5]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:29:19.588 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:29:19.591 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        permission0_.group_id as group_id1_12_0_,
+        permission0_.permission_id as permissi2_12_0_,
+        securitype1_.permission_id as permissi1_13_1_,
+        securitype1_.created_stamp as created_2_13_1_,
+        securitype1_.description as descript3_13_1_,
+        securitype1_.last_updated_stamp as last_upd4_13_1_ 
+    from
+        security_group_permission permission0_ 
+    inner join
+        security_permission securitype1_ 
+            on permission0_.permission_id=securitype1_.permission_id 
+    where
+        permission0_.group_id=?
+2020-09-08 17:29:19.591 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ROLE_ADMIN]
+2020-09-08 17:29:19.595  INFO 17592 --- [nio-8080-exec-3]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW, type = MENU
+2020-09-08 17:29:19.599 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_,
+        applicatio0_.created_stamp as created_2_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_,
+        applicatio0_.module_id as module_i4_0_,
+        applicatio0_.permission_id as permissi5_0_,
+        applicatio0_.application_type_id as applicat6_0_ 
+    from
+        application applicatio0_ 
+    where
+        applicatio0_.application_type_id=? 
+        and (
+            applicatio0_.permission_id in (
+                ? , ? , ? , ? , ? , ? , ? , ?
+            )
+        )
+2020-09-08 17:29:19.599 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:29:19.599 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [USER_CREATE]
+2020-09-08 17:29:19.599 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [USER_VIEW]
+2020-09-08 17:29:19.599 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [ORDER_CREATE]
+2020-09-08 17:29:19.599 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [ORDER_VIEW]
+2020-09-08 17:29:19.599 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [PRODUCT_CREATE]
+2020-09-08 17:29:19.599 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [PRODUCT_VIEW]
+2020-09-08 17:29:19.599 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [8] as [VARCHAR] - [SUPPLIER_CREATE]
+2020-09-08 17:29:19.600 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [9] as [VARCHAR] - [SUPPLIER_VIEW]
+2020-09-08 17:29:19.601 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:29:19.601 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_USER]
+2020-09-08 17:29:19.603 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_type_id as applicat1_1_0_,
+        applicatio0_.created_stamp as created_2_1_0_,
+        applicatio0_.description as descript3_1_0_,
+        applicatio0_.last_updated_stamp as last_upd4_1_0_ 
+    from
+        application_type applicatio0_ 
+    where
+        applicatio0_.application_type_id=?
+2020-09-08 17:29:19.603 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:29:19.605 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:29:19.605 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_ORDER]
+2020-09-08 17:29:19.607 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:29:19.607 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_PRODUCT]
+2020-09-08 17:29:19.609 DEBUG 17592 --- [nio-8080-exec-3]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:29:19.610 TRACE 17592 --- [nio-8080-exec-3]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_SUPPLIER]
+2020-09-08 17:29:19.612  INFO 17592 --- [nio-8080-exec-3]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8
+2020-09-08 17:29:19.613  INFO 17592 --- [nio-8080-exec-3]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList1.sz = 8
+2020-09-08 17:29:19.613  INFO 17592 --- [nio-8080-exec-3]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList2.sz = 0
+2020-09-08 17:29:19.760 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_,
+        userlogin0_.client_token as client_t2_21_,
+        userlogin0_.disabled_date_time as disabled3_21_,
+        userlogin0_.enabled as enabled4_21_,
+        userlogin0_.has_logged_out as has_logg5_21_,
+        userlogin0_.is_system as is_syste6_21_,
+        userlogin0_.otp_resend_number as otp_rese7_21_,
+        userlogin0_.otp_secret as otp_secr8_21_,
+        userlogin0_.party_id as party_i13_21_,
+        userlogin0_.current_password as current_9_21_,
+        userlogin0_.password_hint as passwor10_21_,
+        userlogin0_.require_password_change as require11_21_,
+        userlogin0_.successive_failed_logins as success12_21_ 
+    from
+        user_login userlogin0_ 
+    where
+        userlogin0_.user_login_id=?
+2020-09-08 17:29:19.760 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [admin]
+2020-09-08 17:29:19.761 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        party0_.party_id as party_id1_5_0_,
+        party0_.created_by_user_login as created_2_5_0_,
+        party0_.created_date as created_3_5_0_,
+        party0_.description as descript4_5_0_,
+        party0_.is_unread as is_unrea5_5_0_,
+        party0_.last_modified_date as last_mod6_5_0_,
+        party0_.last_modified_by_user_login as last_mod7_5_0_,
+        party0_.name as name8_5_0_,
+        party0_.party_code as party_co9_5_0_,
+        party0_.status_id as status_12_5_0_,
+        party0_.party_type_id as party_t13_5_0_,
+        partytype1_.party_type_id as party_ty1_7_1_,
+        partytype1_.created_stamp as created_2_7_1_,
+        partytype1_.description as descript3_7_1_,
+        partytype1_.has_table as has_tabl4_7_1_,
+        partytype1_.last_updated_stamp as last_upd5_7_1_,
+        partytype1_.parent_type_id as parent_t6_7_1_,
+        userlogin2_.user_login_id as user_log1_21_2_,
+        userlogin2_.client_token as client_t2_21_2_,
+        userlogin2_.disabled_date_time as disabled3_21_2_,
+        userlogin2_.enabled as enabled4_21_2_,
+        userlogin2_.has_logged_out as has_logg5_21_2_,
+        userlogin2_.is_system as is_syste6_21_2_,
+        userlogin2_.otp_resend_number as otp_rese7_21_2_,
+        userlogin2_.otp_secret as otp_secr8_21_2_,
+        userlogin2_.party_id as party_i13_21_2_,
+        userlogin2_.current_password as current_9_21_2_,
+        userlogin2_.password_hint as passwor10_21_2_,
+        userlogin2_.require_password_change as require11_21_2_,
+        userlogin2_.successive_failed_logins as success12_21_2_,
+        roles3_.user_login_id as user_log1_20_3_,
+        securitygr4_.group_id as group_id2_20_3_,
+        securitygr4_.group_id as group_id1_11_4_,
+        securitygr4_.created_stamp as created_2_11_4_,
+        securitygr4_.description as descript3_11_4_,
+        securitygr4_.last_updated_stamp as last_upd4_11_4_ 
+    from
+        party party0_ 
+    left outer join
+        party_type partytype1_ 
+            on party0_.party_type_id=partytype1_.party_type_id 
+    left outer join
+        user_login userlogin2_ 
+            on party0_.party_id=userlogin2_.party_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin2_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        party0_.party_id=?
+2020-09-08 17:29:19.761 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:29:19.764 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        userlogin0_.user_login_id as user_log1_21_3_,
+        userlogin0_.client_token as client_t2_21_3_,
+        userlogin0_.disabled_date_time as disabled3_21_3_,
+        userlogin0_.enabled as enabled4_21_3_,
+        userlogin0_.has_logged_out as has_logg5_21_3_,
+        userlogin0_.is_system as is_syste6_21_3_,
+        userlogin0_.otp_resend_number as otp_rese7_21_3_,
+        userlogin0_.otp_secret as otp_secr8_21_3_,
+        userlogin0_.party_id as party_i13_21_3_,
+        userlogin0_.current_password as current_9_21_3_,
+        userlogin0_.password_hint as passwor10_21_3_,
+        userlogin0_.require_password_change as require11_21_3_,
+        userlogin0_.successive_failed_logins as success12_21_3_,
+        party1_.party_id as party_id1_5_0_,
+        party1_.created_by_user_login as created_2_5_0_,
+        party1_.created_date as created_3_5_0_,
+        party1_.description as descript4_5_0_,
+        party1_.is_unread as is_unrea5_5_0_,
+        party1_.last_modified_date as last_mod6_5_0_,
+        party1_.last_modified_by_user_login as last_mod7_5_0_,
+        party1_.name as name8_5_0_,
+        party1_.party_code as party_co9_5_0_,
+        party1_.status_id as status_12_5_0_,
+        party1_.party_type_id as party_t13_5_0_,
+        partytype2_.party_type_id as party_ty1_7_1_,
+        partytype2_.created_stamp as created_2_7_1_,
+        partytype2_.description as descript3_7_1_,
+        partytype2_.has_table as has_tabl4_7_1_,
+        partytype2_.last_updated_stamp as last_upd5_7_1_,
+        partytype2_.parent_type_id as parent_t6_7_1_,
+        roles3_.user_login_id as user_log1_20_5_,
+        securitygr4_.group_id as group_id2_20_5_,
+        securitygr4_.group_id as group_id1_11_2_,
+        securitygr4_.created_stamp as created_2_11_2_,
+        securitygr4_.description as descript3_11_2_,
+        securitygr4_.last_updated_stamp as last_upd4_11_2_ 
+    from
+        user_login userlogin0_ 
+    left outer join
+        party party1_ 
+            on userlogin0_.party_id=party1_.party_id 
+    left outer join
+        party_type partytype2_ 
+            on party1_.party_type_id=partytype2_.party_type_id 
+    left outer join
+        user_login_security_group roles3_ 
+            on userlogin0_.user_login_id=roles3_.user_login_id 
+    left outer join
+        security_group securitygr4_ 
+            on roles3_.group_id=securitygr4_.group_id 
+    where
+        userlogin0_.party_id=?
+2020-09-08 17:29:19.765 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [OTHER] - [bd6322f2-2121-11ea-81a8-979e2f76b5a4]
+2020-09-08 17:29:19.767 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        permission0_.group_id as group_id1_12_0_,
+        permission0_.permission_id as permissi2_12_0_,
+        securitype1_.permission_id as permissi1_13_1_,
+        securitype1_.created_stamp as created_2_13_1_,
+        securitype1_.description as descript3_13_1_,
+        securitype1_.last_updated_stamp as last_upd4_13_1_ 
+    from
+        security_group_permission permission0_ 
+    inner join
+        security_permission securitype1_ 
+            on permission0_.permission_id=securitype1_.permission_id 
+    where
+        permission0_.group_id=?
+2020-09-08 17:29:19.767 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ROLE_ADMIN]
+2020-09-08 17:29:19.769  INFO 17592 --- [nio-8080-exec-9]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW, type = MENU
+2020-09-08 17:29:19.770 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_,
+        applicatio0_.created_stamp as created_2_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_,
+        applicatio0_.module_id as module_i4_0_,
+        applicatio0_.permission_id as permissi5_0_,
+        applicatio0_.application_type_id as applicat6_0_ 
+    from
+        application applicatio0_ 
+    where
+        applicatio0_.application_type_id=? 
+        and (
+            applicatio0_.permission_id in (
+                ? , ? , ? , ? , ? , ? , ? , ?
+            )
+        )
+2020-09-08 17:29:19.770 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:29:19.770 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [USER_CREATE]
+2020-09-08 17:29:19.770 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [USER_VIEW]
+2020-09-08 17:29:19.770 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [ORDER_CREATE]
+2020-09-08 17:29:19.770 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - [ORDER_VIEW]
+2020-09-08 17:29:19.771 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [6] as [VARCHAR] - [PRODUCT_CREATE]
+2020-09-08 17:29:19.771 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [7] as [VARCHAR] - [PRODUCT_VIEW]
+2020-09-08 17:29:19.771 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [8] as [VARCHAR] - [SUPPLIER_CREATE]
+2020-09-08 17:29:19.771 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [9] as [VARCHAR] - [SUPPLIER_VIEW]
+2020-09-08 17:29:19.771 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:29:19.772 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_USER]
+2020-09-08 17:29:19.772 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_type_id as applicat1_1_0_,
+        applicatio0_.created_stamp as created_2_1_0_,
+        applicatio0_.description as descript3_1_0_,
+        applicatio0_.last_updated_stamp as last_upd4_1_0_ 
+    from
+        application_type applicatio0_ 
+    where
+        applicatio0_.application_type_id=?
+2020-09-08 17:29:19.773 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU]
+2020-09-08 17:29:19.773 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:29:19.774 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_ORDER]
+2020-09-08 17:29:19.775 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:29:19.775 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_PRODUCT]
+2020-09-08 17:29:19.776 DEBUG 17592 --- [nio-8080-exec-9]  org.hibernate.SQL                        : 
+    select
+        applicatio0_.application_id as applicat1_0_0_,
+        applicatio0_.created_stamp as created_2_0_0_,
+        applicatio0_.last_updated_stamp as last_upd3_0_0_,
+        applicatio0_.module_id as module_i4_0_0_,
+        applicatio0_.permission_id as permissi5_0_0_,
+        applicatio0_.application_type_id as applicat6_0_0_,
+        applicatio1_.application_id as applicat1_0_1_,
+        applicatio1_.created_stamp as created_2_0_1_,
+        applicatio1_.last_updated_stamp as last_upd3_0_1_,
+        applicatio1_.module_id as module_i4_0_1_,
+        applicatio1_.permission_id as permissi5_0_1_,
+        applicatio1_.application_type_id as applicat6_0_1_,
+        securitype2_.permission_id as permissi1_13_2_,
+        securitype2_.created_stamp as created_2_13_2_,
+        securitype2_.description as descript3_13_2_,
+        securitype2_.last_updated_stamp as last_upd4_13_2_,
+        applicatio3_.application_type_id as applicat1_1_3_,
+        applicatio3_.created_stamp as created_2_1_3_,
+        applicatio3_.description as descript3_1_3_,
+        applicatio3_.last_updated_stamp as last_upd4_1_3_ 
+    from
+        application applicatio0_ 
+    left outer join
+        application applicatio1_ 
+            on applicatio0_.module_id=applicatio1_.application_id 
+    left outer join
+        security_permission securitype2_ 
+            on applicatio1_.permission_id=securitype2_.permission_id 
+    left outer join
+        application_type applicatio3_ 
+            on applicatio1_.application_type_id=applicatio3_.application_type_id 
+    where
+        applicatio0_.application_id=?
+2020-09-08 17:29:19.776 TRACE 17592 --- [nio-8080-exec-9]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [MENU_SUPPLIER]
+2020-09-08 17:29:19.777  INFO 17592 --- [nio-8080-exec-9]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8
+2020-09-08 17:29:19.777  INFO 17592 --- [nio-8080-exec-9]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList1.sz = 8
+2020-09-08 17:29:19.777  INFO 17592 --- [nio-8080-exec-9]  c.h.b.service.ApplicationServiceImpl     : getListByPermissionAndType, permissionList = USER_CREATE,USER_VIEW,ORDER_CREATE,ORDER_VIEW,PRODUCT_CREATE,PRODUCT_VIEW,SUPPLIER_CREATE,SUPPLIER_VIEW,, type = MENU, applicationList.sz = 8, applicationList2.sz = 0
+2020-09-08 17:29:23.624 DEBUG 17592 --- [nio-8080-exec-7]  org.hibernate.SQL                        : 
+    select
+        cast(id as varchar) supplierId,
+        code supplierCode,
+        name supplierName,
+        phone_number phoneNumber,
+        email,
+        address  
+    from
+        supplier s 
+    where
+        is_deleted = false   
+        and (
+            upper(code) like upper(concat('%', ?, '%'))   
+            or upper(name) like upper(concat('%', ?, '%'))   
+            or upper(email) like upper(concat('%', ?, '%'))   
+            or upper(phone_number) like upper(concat('%', ?, '%'))   
+            or upper(address) like upper(concat('%', ?, '%'))
+        ) 
+    order by
+        s.last_updated_stamp desc limit ?
+2020-09-08 17:29:23.624 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2020-09-08 17:29:23.625 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - []
+2020-09-08 17:29:23.625 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - []
+2020-09-08 17:29:23.625 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - []
+2020-09-08 17:29:23.625 TRACE 17592 --- [nio-8080-exec-7]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [VARCHAR] - []
+2020-09-08 17:29:23.657 DEBUG 17592 --- [nio-8080-exec-6]  org.hibernate.SQL                        : 
+    select
+        CAST(p.id as varchar) productId,
+        code productCode,
+        p.name productName,
+        c.name categoryName,
+        price,
+        uom,
+        image_link linkImg,
+        inventory_number warehouseQuantity,
+        p.is_deleted ,
+        p.description 
+    from
+        product p 
+    left join
+        category c 
+            on p.category_id = c.id 
+    where
+        p.is_deleted = false     
+        and(
+            upper(p.name) like concat('%',upper(?),'%')     
+            or upper(p.code ) like concat('%',upper(?),'%')    
+            or upper(c.name ) like concat('%',upper(?),'%')
+        )     
+    order by
+        p.last_updated_stamp DESC limit ?
+2020-09-08 17:29:23.657 TRACE 17592 --- [nio-8080-exec-6]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2020-09-08 17:29:23.657 TRACE 17592 --- [nio-8080-exec-6]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - []
+2020-09-08 17:29:23.657 TRACE 17592 --- [nio-8080-exec-6]  o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - []
